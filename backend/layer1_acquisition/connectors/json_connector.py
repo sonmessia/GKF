@@ -2,6 +2,7 @@
 JSON Data Connector
 Fetches data from JSON files or JSON APIs.
 """
+
 import json
 import requests
 from pathlib import Path
@@ -23,17 +24,22 @@ class JSONConnector(BaseConnector):
         }
         """
         super().__init__(config)
-        self.source_type = config.get('source_type', 'file')
-        self.source_path = config.get('source_path')
-        self.headers = config.get('headers', {})
+        self.source_type = config.get("source_type", "file")
+        self.source_path = config.get("source_path")
+        self.headers = config.get("headers", {})
 
     def connect(self) -> bool:
         """Validate source availability"""
         try:
-            if self.source_type == 'file':
+            if self.source_path is None:
+                logger.error("Source path not provided in configuration.")
+                return False
+            if self.source_type == "file":
                 return Path(self.source_path).exists()
-            elif self.source_type == 'api':
-                response = requests.head(self.source_path, headers=self.headers, timeout=5)
+            elif self.source_type == "api":
+                response = requests.head(
+                    self.source_path, headers=self.headers, timeout=5
+                )
                 return response.status_code < 400
         except Exception as e:
             logger.error(f"Connection failed: {e}")
@@ -42,11 +48,16 @@ class JSONConnector(BaseConnector):
     def fetch(self) -> List[Dict]:
         """Fetch JSON data"""
         try:
-            if self.source_type == 'file':
-                with open(self.source_path, 'r', encoding='utf-8') as f:
+            if self.source_path is None:
+                logger.error("Source path not provided in configuration.")
+                return []
+            if self.source_type == "file":
+                with open(self.source_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
-            elif self.source_type == 'api':
-                response = requests.get(self.source_path, headers=self.headers, timeout=30)
+            elif self.source_type == "api":
+                response = requests.get(
+                    self.source_path, headers=self.headers, timeout=30
+                )
                 response.raise_for_status()
                 data = response.json()
 

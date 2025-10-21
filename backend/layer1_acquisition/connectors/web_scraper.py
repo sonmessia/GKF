@@ -2,6 +2,7 @@
 Web Scraper Connector
 Fetches data from web pages using BeautifulSoup.
 """
+
 import requests
 from bs4 import BeautifulSoup
 from typing import Dict, List, Callable
@@ -23,11 +24,9 @@ class WebScraperConnector(BaseConnector):
         }
         """
         super().__init__(config)
-        self.urls = config.get('urls', [])
-        self.headers = config.get('headers', {
-            'User-Agent': 'GKF-Crawler/1.0'
-        })
-        self.parser: Callable = config.get('parser', self._default_parser)
+        self.urls = config.get("urls", [])
+        self.headers = config.get("headers", {"User-Agent": "GKF-Crawler/1.0"})
+        self.parser: Callable = config.get("parser", self._default_parser)
 
     def connect(self) -> bool:
         """Validate URLs are accessible"""
@@ -44,7 +43,7 @@ class WebScraperConnector(BaseConnector):
                     response = requests.get(url, headers=self.headers, timeout=30)
                     response.raise_for_status()
 
-                    soup = BeautifulSoup(response.content, 'html.parser')
+                    soup = BeautifulSoup(response.content, "html.parser")
                     page_data = self.parser(soup, url)
 
                     if page_data:
@@ -76,7 +75,7 @@ class WebScraperConnector(BaseConnector):
         Override with custom parser in config.
         """
         return {
-            'url': url,
-            'title': soup.title.string if soup.title else 'No title',
-            'text': soup.get_text()[:500]  # First 500 chars
+            "url": url,
+            "title": soup.title.string if soup.title else "No title",
+            "text": soup.get_text()[:500],  # First 500 chars
         }

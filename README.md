@@ -50,7 +50,9 @@ The Genesis Knowledge Framework (GKF) is a modular, ontology-driven platform tha
 │  Layer 1: Knowledge Acquisition                         │
 │  - Data Connectors (JSON, CSV, Web Scraper)             │
 │  - RDF Mapping Engine                                   │
-│  - Entity Linker (Wikidata, DBpedia)                    │
+│  - Entity Linker (Wikidata, DBpedia, ESCO, etc.)        │
+│    * Modular architecture with 5+ LOD sources           │
+│    * Educational ontologies support (AIISO, LRMI)       │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -130,7 +132,12 @@ GKF/
 │   ├── layer1_acquisition/       # Data ingestion & RDF mapping
 │   │   ├── connectors/           # JSON, CSV, Web scrapers
 │   │   ├── mapping/              # RDF mapping engine
-│   │   └── entity_linking/       # LOD entity linker
+│   │   └── entity_linking/       # LOD entity linker (5+ sources)
+│   │       ├── base_linker.py    # Abstract base class
+│   │       ├── registry.py       # Linker registry
+│   │       ├── wikidata_linker.py, dbpedia_linker.py
+│   │       ├── esco_linker.py    # European Skills taxonomy
+│   │       └── openuniversity_linker.py, linkeduniversities_linker.py
 │   ├── layer2_knowledge/         # Knowledge storage & integration
 │   │   ├── triplestore/          # GraphDB interface
 │   │   ├── ontology/             # Ontology management
@@ -155,7 +162,8 @@ GKF/
 │   └── mappings/                 # Mapping rules
 ├── docs/
 │   ├── ARCHITECTURE.md           # Detailed architecture
-│   └── ONTOLOGY_GUIDE.md         # Ontology documentation
+│   ├── ONTOLOGY_GUIDE.md         # Ontology documentation
+│   └── ENTITY_LINKING_ARCHITECTURE.md  # Entity linking design
 ├── docker-compose.yml
 └── README.md
 ```
@@ -248,7 +256,7 @@ Example domains:
 ## Technology Stack
 
 | Component     | Technology               | Purpose              |
-| --------------- | ------------------------- | --------------------- |
+| ------------- | ------------------------ | -------------------- |
 | Backend       | Python, FastAPI          | API & Business Logic |
 | Frontend      | React, Vite, Material-UI | User Interface       |
 | Triple Store  | GraphDB                  | RDF Storage          |
@@ -289,9 +297,39 @@ Contributions are welcome! Please:
 3. Make your changes with tests
 4. Submit a pull request
 
+## Recent Updates
+
+### Entity Linking Refactoring (October 21, 2025)
+
+The entity linking layer has been completely refactored with a modular, extensible architecture:
+
+- **5+ LOD Sources**: Wikidata, DBpedia, ESCO, Open University, LinkedUniversities
+- **Modular Design**: Registry-based architecture for easy extensibility
+- **Educational Focus**: Specialized support for academic ontologies (AIISO, LRMI, ESCO)
+- **Backward Compatible**: Maintains existing API while adding new capabilities
+
+See [Entity Linking Architecture](docs/ENTITY_LINKING_ARCHITECTURE.md) for details.
+
+```python
+from layer1_acquisition.entity_linking import EntityLinker
+
+linker = EntityLinker()
+
+# Link to multiple educational LOD sources
+links = linker.link_entity(
+    "Machine Learning",
+    sources=["wikidata", "dbpedia", "esco"]
+)
+
+# Educational-specific linking
+course_uri = linker.link_to_openuniversity("Data Science", entity_type="course")
+skill_uri = linker.link_to_esco("Python Programming", entity_type="skill")
+```
+
 ## Roadmap
 
-- [ ] Phase 1: MVP Core (Complete)
+- [x] Phase 1: MVP Core (Complete)
+- [x] Entity Linking Refactoring - Multi-LOD Support (Complete)
 - [ ] Phase 2: Pilot App - IT EduGraph (In Progress)
 - [ ] Phase 3: Community Intelligence
   - [ ] User interaction tracking

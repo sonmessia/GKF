@@ -31,6 +31,9 @@ class CSVConnector(BaseConnector):
     def connect(self) -> bool:
         """Validate CSV file exists"""
         try:
+            if self.source_path is None:
+                logger.error("Source path not provided in configuration.")
+                return False
             return Path(self.source_path).exists()
         except Exception as e:
             logger.error(f"Connection failed: {e}")
@@ -39,6 +42,9 @@ class CSVConnector(BaseConnector):
     def fetch(self) -> List[Dict]:
         """Fetch CSV data as list of dictionaries"""
         try:
+            if self.source_path is None:
+                logger.error("Source path not provided in configuration.")
+                return []
             with open(self.source_path, "r", encoding=self.encoding) as f:
                 reader = csv.DictReader(f, delimiter=self.delimiter)
                 self.data = list(reader)
