@@ -248,7 +248,7 @@ Example domains:
 ## Technology Stack
 
 | Component     | Technology               | Purpose              |
-| ------------- | ------------------------ | -------------------- |
+| --------------- | ------------------------- | --------------------- |
 | Backend       | Python, FastAPI          | API & Business Logic |
 | Frontend      | React, Vite, Material-UI | User Interface       |
 | Triple Store  | GraphDB                  | RDF Storage          |
