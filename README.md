@@ -299,7 +299,7 @@ Contributions are welcome! Please:
 
 ## Recent Updates
 
-### Entity Linking Refactoring (October 2025)
+### Entity Linking Refactoring (October 21, 2025)
 
 The entity linking layer has been completely refactored with a modular, extensible architecture:
 
