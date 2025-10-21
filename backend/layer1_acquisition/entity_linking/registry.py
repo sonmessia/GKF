@@ -176,7 +176,7 @@ class LinkerRegistry:
             "total_linkers": len(self._linker_classes),
             "instantiated_linkers": len(self._linkers),
             "available_linkers": self.list_available_linkers(),
-            "configured_linkers": list(self._configs.keys())
+            "configured_linkers": list(self._configs.keys()),
         }
 
 
