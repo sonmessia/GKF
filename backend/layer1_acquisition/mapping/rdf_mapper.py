@@ -55,7 +55,7 @@ class MappingEngine:
                 entity_uri = self.data_ns[f"{entity_type}/{entity_id}"]
 
                 # Add type triple
-                if entity_type not in self.gkf:
+                if not hasattr(self.gkf, entity_type):
                     raise ValueError(f"Unknown entity type: {entity_type}")
                 entity_class = self.gkf[entity_type]
                 self.graph.add((entity_uri, RDF.type, entity_class))
