@@ -2,7 +2,7 @@
 
 **An Ontology-Driven Platform for Building Living Knowledge Ecosystems**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache-2.0](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/apache-2.0)
 
 ## Overview
 
@@ -27,30 +27,30 @@ The Genesis Knowledge Framework (GKF) is a modular, ontology-driven platform tha
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Layer 4: Application & Experience                      │
-│  - React Frontend                                        │
-│  - Knowledge Graph Visualization (D3.js)                 │
-│  - Learning Path Generator                               │
+│  - React Frontend                                       │
+│  - Knowledge Graph Visualization (D3.js)                │
+│  - Learning Path Generator                              │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 3: Intelligence & Service                         │
-│  - AI Reasoning Engine (Symbolic + Statistical)          │
-│  - REST API (FastAPI)                                    │
-│  - SPARQL Endpoint                                       │
+│  Layer 3: Intelligence & Service                        │
+│  - AI Reasoning Engine (Symbolic + Statistical)         │
+│  - REST API (FastAPI)                                   │
+│  - SPARQL Endpoint                                      │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 2: Core Knowledge                                 │
-│  - Triple Store (GraphDB)                                │
-│  - Ontology Manager                                      │
-│  - Knowledge Integrator (Foundational + Experiential)    │
+│  Layer 2: Core Knowledge                                │
+│  - Triple Store (GraphDB)                               │
+│  - Ontology Manager                                     │
+│  - Knowledge Integrator (Foundational + Experiential)   │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 1: Knowledge Acquisition                          │
-│  - Data Connectors (JSON, CSV, Web Scraper)              │
-│  - RDF Mapping Engine                                    │
-│  - Entity Linker (Wikidata, DBpedia)                     │
+│  Layer 1: Knowledge Acquisition                         │
+│  - Data Connectors (JSON, CSV, Web Scraper)             │
+│  - RDF Mapping Engine                                   │
+│  - Entity Linker (Wikidata, DBpedia)                    │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -65,22 +65,26 @@ The Genesis Knowledge Framework (GKF) is a modular, ontology-driven platform tha
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd GKF
 ```
 
 2. Start all services with Docker Compose:
+
 ```bash
 docker-compose up -d
 ```
 
 This will start:
+
 - GraphDB Triple Store (http://localhost:7200)
 - Backend API (http://localhost:8000)
 - Frontend Application (http://localhost:3000)
 
 3. Load the ontology and seed data:
+
 ```bash
 # Access GraphDB workbench at http://localhost:7200
 # Create a new repository named "gkf"
@@ -89,6 +93,7 @@ This will start:
 ```
 
 4. Access the application:
+
 - Frontend: http://localhost:3000
 - API Documentation: http://localhost:8000/docs
 - GraphDB Workbench: http://localhost:7200
@@ -158,26 +163,31 @@ GKF/
 ## API Endpoints
 
 ### Skills
+
 - `GET /api/skills` - Get all skills
 - `GET /api/skills/{skill_id}` - Get skill details
 - `GET /api/skills/{skill_id}/prerequisites` - Get prerequisites
 - `GET /api/skills/{skill_id}/related` - Get related skills
 
 ### Courses
+
 - `GET /api/courses` - Get all courses
 - `GET /api/courses/skill/{skill_name}` - Find courses for a skill
 
 ### Jobs
+
 - `GET /api/jobs` - Get all jobs
 - `GET /api/jobs/{job_id}/skills` - Get required skills
 - `GET /api/jobs/{job_id}/recommended-courses` - Get course recommendations
 
 ### Intelligent Recommendations
+
 - `POST /api/recommendations/learning-path` - Generate learning path
 - `POST /api/recommendations/next-skills` - Recommend next skills
 - `GET /api/recommendations/career-path` - Analyze career progression
 
 ### SPARQL
+
 - `POST /sparql` - Execute raw SPARQL queries
 
 Full API documentation available at: http://localhost:8000/docs
@@ -230,21 +240,22 @@ GKF is designed to be domain-agnostic. To adapt it to a new domain (e.g., Health
 5. **Load & Query**: Import into GraphDB and use the API
 
 Example domains:
+
 - Healthcare: Diseases, Treatments, Medications, Symptoms
 - Tourism: Destinations, Attractions, Hotels, Itineraries
 - Agriculture: Crops, Techniques, Equipment, Weather
 
 ## Technology Stack
 
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| Backend | Python, FastAPI | API & Business Logic |
-| Frontend | React, Vite, Material-UI | User Interface |
-| Triple Store | GraphDB | RDF Storage |
-| Ontology | OWL 2, Turtle | Knowledge Modeling |
-| Reasoning | RDFLib, SPARQL | Semantic Inference |
-| Visualization | D3.js | Graph Visualization |
-| Deployment | Docker, Docker Compose | Containerization |
+| Component     | Technology               | Purpose              |
+| ------------- | ------------------------ | -------------------- |
+| Backend       | Python, FastAPI          | API & Business Logic |
+| Frontend      | React, Vite, Material-UI | User Interface       |
+| Triple Store  | GraphDB                  | RDF Storage          |
+| Ontology      | OWL 2, Turtle            | Knowledge Modeling   |
+| Reasoning     | RDFLib, SPARQL           | Semantic Inference   |
+| Visualization | D3.js                    | Graph Visualization  |
+| Deployment    | Docker, Docker Compose   | Containerization     |
 
 ## Development
 
@@ -293,7 +304,7 @@ Contributions are welcome! Please:
 
 ## License
 
-MIT License - See LICENSE file for details
+Apache-2.0 License - See LICENSE file for details
 
 ## Acknowledgments
 
@@ -304,6 +315,7 @@ MIT License - See LICENSE file for details
 ## Contact
 
 For questions, issues, or contributions:
+
 - GitHub Issues: [Create an issue]
 - Documentation: See `docs/` folder
 - Community: [Coming soon]
