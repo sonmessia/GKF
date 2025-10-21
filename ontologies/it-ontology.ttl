@@ -1,0 +1,622 @@
+@prefix : <http://gkf.org/ontology/it#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+
+<http://gkf.org/ontology/it> a owl:Ontology ;
+    dc:title "IT Education Knowledge Graph Ontology" ;
+    dc:description "Core ontology for the Genesis Knowledge Framework - IT Domain" ;
+    dc:creator "GKF Project" ;
+    dc:created "2025-10-13"^^xsd:date ;
+    owl:versionInfo "1.0.0" .
+
+#################################################################
+#    Classes - Knowledge Domain Hierarchy
+#################################################################
+
+:Knowledge a owl:Class ;
+    rdfs:label "Knowledge"@en ;
+    rdfs:comment "Abstract representation of knowledge" .
+
+:FoundationalKnowledge a owl:Class ;
+    rdfs:subClassOf :Knowledge ;
+    rdfs:label "Foundational Knowledge"@en ;
+    rdfs:comment "Objective, globally verified knowledge from authoritative sources" .
+
+:ExperientialKnowledge a owl:Class ;
+    rdfs:subClassOf :Knowledge ;
+    rdfs:label "Experiential Knowledge"@en ;
+    rdfs:comment "Community-driven, user-generated knowledge based on interactions" .
+
+#################################################################
+#    Classes - IT Domain Core Entities
+#################################################################
+
+:Skill a owl:Class ;
+    rdfs:subClassOf :Knowledge ;
+    rdfs:label "Skill"@en ;
+    rdfs:comment "A technical or soft skill in the IT domain" ;
+    skos:example "Python Programming, Machine Learning, Leadership" .
+
+:TechnicalSkill a owl:Class ;
+    rdfs:subClassOf :Skill ;
+    rdfs:label "Technical Skill"@en ;
+    rdfs:comment "Technical competency required in IT" .
+
+:SoftSkill a owl:Class ;
+    rdfs:subClassOf :Skill ;
+    rdfs:label "Soft Skill"@en ;
+    rdfs:comment "Non-technical interpersonal skills" .
+
+:Job a owl:Class ;
+    rdfs:label "Job"@en ;
+    rdfs:comment "A professional role or position in IT" ;
+    skos:example "Software Engineer, Data Scientist, DevOps Engineer" .
+
+:Course a owl:Class ;
+    rdfs:label "Course"@en ;
+    rdfs:comment "An educational resource for learning" ;
+    skos:example "CS50, Full Stack Web Development Bootcamp" .
+
+:LearningPath a owl:Class ;
+    rdfs:label "Learning Path"@en ;
+    rdfs:comment "A structured sequence of learning resources" .
+
+:Technology a owl:Class ;
+    rdfs:label "Technology"@en ;
+    rdfs:comment "A technology, tool, framework, or platform" ;
+    skos:example "React, Docker, PostgreSQL" .
+
+:Certification a owl:Class ;
+    rdfs:label "Certification"@en ;
+    rdfs:comment "Professional certification in IT" ;
+    skos:example "AWS Certified Solutions Architect, Google Cloud Professional" .
+
+:Company a owl:Class ;
+    rdfs:label "Company"@en ;
+    rdfs:comment "Organization offering IT jobs" .
+
+:UserProfile a owl:Class ;
+    rdfs:label "User Profile"@en ;
+    rdfs:comment "Represents a learner's profile and progress" .
+
+:Interaction a owl:Class ;
+    rdfs:subClassOf :ExperientialKnowledge ;
+    rdfs:label "Interaction"@en ;
+    rdfs:comment "User interaction captured as experiential knowledge" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:requires a owl:ObjectProperty ;
+    rdfs:domain :Job ;
+    rdfs:range :Skill ;
+    rdfs:label "requires"@en ;
+    rdfs:comment "Job requires a specific skill" .
+
+:teaches a owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Skill ;
+    rdfs:label "teaches"@en ;
+    rdfs:comment "Course teaches a particular skill" .
+
+:prerequisite a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:domain :Skill ;
+    rdfs:range :Skill ;
+    rdfs:label "prerequisite"@en ;
+    rdfs:comment "Skill A is prerequisite to Skill B" .
+
+:relatedTo a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:domain :Skill ;
+    rdfs:range :Skill ;
+    rdfs:label "related to"@en ;
+    rdfs:comment "Skill is related to another skill" .
+
+:partOf a owl:ObjectProperty, owl:TransitiveProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :LearningPath ;
+    rdfs:label "part of"@en ;
+    rdfs:comment "Course is part of a learning path" .
+
+:usesTechnology a owl:ObjectProperty ;
+    rdfs:domain :Job ;
+    rdfs:range :Technology ;
+    rdfs:label "uses technology"@en ;
+    rdfs:comment "Job uses specific technology" .
+
+:recommendedFor a owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Job ;
+    rdfs:label "recommended for"@en ;
+    rdfs:comment "Course is recommended for a specific job role" .
+
+:offeredBy a owl:ObjectProperty ;
+    rdfs:domain :Job ;
+    rdfs:range :Company ;
+    rdfs:label "offered by"@en ;
+    rdfs:comment "Job is offered by a company" .
+
+:hasSkill a owl:ObjectProperty ;
+    rdfs:domain :UserProfile ;
+    rdfs:range :Skill ;
+    rdfs:label "has skill"@en ;
+    rdfs:comment "User has acquired a skill" .
+
+:completedCourse a owl:ObjectProperty ;
+    rdfs:domain :UserProfile ;
+    rdfs:range :Course ;
+    rdfs:label "completed course"@en ;
+    rdfs:comment "User has completed a course" .
+
+:interestedIn a owl:ObjectProperty ;
+    rdfs:domain :UserProfile ;
+    rdfs:range :Job ;
+    rdfs:label "interested in"@en ;
+    rdfs:comment "User is interested in a job role" .
+
+:linkedTo a owl:ObjectProperty ;
+    rdfs:label "linked to"@en ;
+    rdfs:comment "Links local entity to global URI (LOD)" .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+:skillName a owl:DatatypeProperty ;
+    rdfs:domain :Skill ;
+    rdfs:range xsd:string ;
+    rdfs:label "skill name"@en .
+
+:skillLevel a owl:DatatypeProperty ;
+    rdfs:domain :Skill ;
+    rdfs:range xsd:string ;
+    rdfs:label "skill level"@en ;
+    rdfs:comment "Beginner, Intermediate, Advanced, Expert" .
+
+:jobTitle a owl:DatatypeProperty ;
+    rdfs:domain :Job ;
+    rdfs:range xsd:string ;
+    rdfs:label "job title"@en .
+
+:salary a owl:DatatypeProperty ;
+    rdfs:domain :Job ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "salary"@en .
+
+:courseName a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string ;
+    rdfs:label "course name"@en .
+
+:courseURL a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "course URL"@en .
+
+:duration a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:integer ;
+    rdfs:label "duration"@en ;
+    rdfs:comment "Duration in hours" .
+
+:difficulty a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string ;
+    rdfs:label "difficulty"@en .
+
+:rating a owl:DatatypeProperty ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "rating"@en .
+
+:description a owl:DatatypeProperty ;
+    rdfs:range xsd:string ;
+    rdfs:label "description"@en .
+
+:wikidataURI a owl:DatatypeProperty ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "wikidata URI"@en ;
+    rdfs:comment "Linked Open Data reference to Wikidata" .
+
+:dbpediaURI a owl:DatatypeProperty ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "DBpedia URI"@en ;
+    rdfs:comment "Linked Open Data reference to DBpedia" .
+
+:timestamp a owl:DatatypeProperty ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "timestamp"@en .
+
+#################################################################
+#    Individuals - Linked Open Data Instances
+#################################################################
+
+#################################################################
+#    Technologies (Linked to DBpedia and Wikidata)
+#################################################################
+
+:Python a :Technology ;
+    rdfs:label "Python"@en ;
+    :description "High-level, interpreted programming language known for readability and versatility" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q28865> ;
+    :dbpediaURI <http://dbpedia.org/resource/Python_(programming_language)> ;
+    :linkedTo <http://dbpedia.org/resource/Python_(programming_language)> ;
+    :rating "4.8"^^xsd:decimal .
+
+:Java a :Technology ;
+    rdfs:label "Java"@en ;
+    :description "Object-oriented programming language designed for platform independence" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q251> ;
+    :dbpediaURI <http://dbpedia.org/resource/Java_(programming_language)> ;
+    :linkedTo <http://dbpedia.org/resource/Java_(programming_language)> ;
+    :rating "4.5"^^xsd:decimal .
+
+:JavaScript a :Technology ;
+    rdfs:label "JavaScript"@en ;
+    :description "Dynamic programming language for web development and interactive content" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q2005> ;
+    :dbpediaURI <http://dbpedia.org/resource/JavaScript> ;
+    :linkedTo <http://dbpedia.org/resource/JavaScript> ;
+    :rating "4.7"^^xsd:decimal .
+
+:React a :Technology ;
+    rdfs:label "React"@en ;
+    :description "JavaScript library for building user interfaces, maintained by Meta" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q19399674> ;
+    :dbpediaURI <http://dbpedia.org/resource/React_(JavaScript_library)> ;
+    :linkedTo <http://dbpedia.org/resource/React_(JavaScript_library)> ;
+    :rating "4.9"^^xsd:decimal .
+
+:Docker a :Technology ;
+    rdfs:label "Docker"@en ;
+    :description "Platform for developing, shipping, and running applications in containers" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q15206305> ;
+    :dbpediaURI <http://dbpedia.org/resource/Docker_(software)> ;
+    :linkedTo <http://dbpedia.org/resource/Docker_(software)> ;
+    :rating "4.6"^^xsd:decimal .
+
+:Kubernetes a :Technology ;
+    rdfs:label "Kubernetes"@en ;
+    :description "Open-source container orchestration system originally designed by Google" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q22661306> ;
+    :dbpediaURI <http://dbpedia.org/resource/Kubernetes> ;
+    :linkedTo <http://dbpedia.org/resource/Kubernetes> ;
+    :rating "4.7"^^xsd:decimal .
+
+:PostgreSQL a :Technology ;
+    rdfs:label "PostgreSQL"@en ;
+    :description "Advanced open-source relational database management system" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q192490> ;
+    :dbpediaURI <http://dbpedia.org/resource/PostgreSQL> ;
+    :linkedTo <http://dbpedia.org/resource/PostgreSQL> ;
+    :rating "4.8"^^xsd:decimal .
+
+:TensorFlow a :Technology ;
+    rdfs:label "TensorFlow"@en ;
+    :description "Open-source machine learning framework developed by Google" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q21147662> ;
+    :dbpediaURI <http://dbpedia.org/resource/TensorFlow> ;
+    :linkedTo <http://dbpedia.org/resource/TensorFlow> ;
+    :rating "4.7"^^xsd:decimal .
+
+:PyTorch a :Technology ;
+    rdfs:label "PyTorch"@en ;
+    :description "Open-source machine learning library developed by Meta AI" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q29356669> ;
+    :dbpediaURI <http://dbpedia.org/resource/PyTorch> ;
+    :linkedTo <http://dbpedia.org/resource/PyTorch> ;
+    :rating "4.8"^^xsd:decimal .
+
+:AWS a :Technology ;
+    rdfs:label "Amazon Web Services"@en ;
+    :description "Cloud computing platform by Amazon providing IaaS, PaaS, and SaaS" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q456157> ;
+    :dbpediaURI <http://dbpedia.org/resource/Amazon_Web_Services> ;
+    :linkedTo <http://dbpedia.org/resource/Amazon_Web_Services> ;
+    :rating "4.6"^^xsd:decimal .
+
+#################################################################
+#    Technical Skills (Linked Open Data)
+#################################################################
+
+:PythonProgramming a :TechnicalSkill ;
+    :skillName "Python Programming" ;
+    :skillLevel "Intermediate" ;
+    rdfs:label "Python Programming"@en ;
+    :description "Ability to write efficient, maintainable code in Python" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q28865> ;
+    :dbpediaURI <http://dbpedia.org/resource/Python_(programming_language)> .
+
+:MachineLearning a :TechnicalSkill ;
+    :skillName "Machine Learning" ;
+    :skillLevel "Advanced" ;
+    rdfs:label "Machine Learning"@en ;
+    :description "Knowledge of ML algorithms, model training, and deployment" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q2539> ;
+    :dbpediaURI <http://dbpedia.org/resource/Machine_learning> ;
+    :prerequisite :PythonProgramming .
+
+:DeepLearning a :TechnicalSkill ;
+    :skillName "Deep Learning" ;
+    :skillLevel "Expert" ;
+    rdfs:label "Deep Learning"@en ;
+    :description "Neural networks, CNNs, RNNs, transformers for complex pattern recognition" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q338> ;
+    :dbpediaURI <http://dbpedia.org/resource/Deep_learning> ;
+    :prerequisite :MachineLearning .
+
+:WebDevelopment a :TechnicalSkill ;
+    :skillName "Web Development" ;
+    :skillLevel "Intermediate" ;
+    rdfs:label "Web Development"@en ;
+    :description "Building web applications using modern frameworks and technologies" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q386854> ;
+    :dbpediaURI <http://dbpedia.org/resource/Web_development> .
+
+:CloudComputing a :TechnicalSkill ;
+    :skillName "Cloud Computing" ;
+    :skillLevel "Advanced" ;
+    rdfs:label "Cloud Computing"@en ;
+    :description "Designing and deploying applications on cloud platforms" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q483639> ;
+    :dbpediaURI <http://dbpedia.org/resource/Cloud_computing> .
+
+:DevOps a :TechnicalSkill ;
+    :skillName "DevOps" ;
+    :skillLevel "Advanced" ;
+    rdfs:label "DevOps"@en ;
+    :description "CI/CD, infrastructure as code, monitoring, and automation" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q5294887> ;
+    :dbpediaURI <http://dbpedia.org/resource/DevOps> ;
+    :relatedTo :CloudComputing .
+
+:DataScience a :TechnicalSkill ;
+    :skillName "Data Science" ;
+    :skillLevel "Advanced" ;
+    rdfs:label "Data Science"@en ;
+    :description "Statistical analysis, data mining, and predictive modeling" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q2374463> ;
+    :dbpediaURI <http://dbpedia.org/resource/Data_science> ;
+    :prerequisite :PythonProgramming .
+
+:Cybersecurity a :TechnicalSkill ;
+    :skillName "Cybersecurity" ;
+    :skillLevel "Advanced" ;
+    rdfs:label "Cybersecurity"@en ;
+    :description "Security protocols, threat detection, and risk management" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q1064010> ;
+    :dbpediaURI <http://dbpedia.org/resource/Computer_security> .
+
+#################################################################
+#    Soft Skills
+#################################################################
+
+:Leadership a :SoftSkill ;
+    :skillName "Leadership" ;
+    rdfs:label "Leadership"@en ;
+    :description "Ability to guide, motivate, and influence teams effectively" .
+
+:Communication a :SoftSkill ;
+    :skillName "Communication" ;
+    rdfs:label "Communication"@en ;
+    :description "Clear verbal and written communication in technical contexts" .
+
+:ProblemSolving a :SoftSkill ;
+    :skillName "Problem Solving" ;
+    rdfs:label "Problem Solving"@en ;
+    :description "Analytical thinking and creative solution development" .
+
+#################################################################
+#    Jobs (Linked Open Data)
+#################################################################
+
+:SoftwareEngineer a :Job ;
+    :jobTitle "Software Engineer" ;
+    rdfs:label "Software Engineer"@en ;
+    :description "Designs, develops, and maintains software applications" ;
+    :salary "95000"^^xsd:decimal ;
+    :wikidataURI <http://www.wikidata.org/entity/Q83951> ;
+    :dbpediaURI <http://dbpedia.org/resource/Software_engineer> ;
+    :requires :PythonProgramming, :WebDevelopment ;
+    :usesTechnology :Python, :JavaScript, :React .
+
+:DataScientist a :Job ;
+    :jobTitle "Data Scientist" ;
+    rdfs:label "Data Scientist"@en ;
+    :description "Analyzes complex data to drive business insights and decisions" ;
+    :salary "120000"^^xsd:decimal ;
+    :wikidataURI <http://www.wikidata.org/entity/Q21533533> ;
+    :dbpediaURI <http://dbpedia.org/resource/Data_scientist> ;
+    :requires :DataScience, :MachineLearning, :PythonProgramming ;
+    :usesTechnology :Python, :TensorFlow, :PyTorch .
+
+:MLEngineer a :Job ;
+    :jobTitle "Machine Learning Engineer" ;
+    rdfs:label "Machine Learning Engineer"@en ;
+    :description "Develops and deploys machine learning models in production" ;
+    :salary "130000"^^xsd:decimal ;
+    :requires :MachineLearning, :DeepLearning, :CloudComputing ;
+    :usesTechnology :Python, :TensorFlow, :AWS, :Kubernetes .
+
+:DevOpsEngineer a :Job ;
+    :jobTitle "DevOps Engineer" ;
+    rdfs:label "DevOps Engineer"@en ;
+    :description "Bridges development and operations through automation" ;
+    :salary "110000"^^xsd:decimal ;
+    :wikidataURI <http://www.wikidata.org/entity/Q5294887> ;
+    :requires :DevOps, :CloudComputing ;
+    :usesTechnology :Docker, :Kubernetes, :AWS .
+
+:CloudArchitect a :Job ;
+    :jobTitle "Cloud Solutions Architect" ;
+    rdfs:label "Cloud Solutions Architect"@en ;
+    :description "Designs scalable cloud infrastructure and solutions" ;
+    :salary "140000"^^xsd:decimal ;
+    :requires :CloudComputing, :DevOps, :Leadership ;
+    :usesTechnology :AWS, :Kubernetes, :Docker .
+
+:CybersecurityAnalyst a :Job ;
+    :jobTitle "Cybersecurity Analyst" ;
+    rdfs:label "Cybersecurity Analyst"@en ;
+    :description "Protects systems and networks from security threats" ;
+    :salary "100000"^^xsd:decimal ;
+    :wikidataURI <http://www.wikidata.org/entity/Q1064010> ;
+    :requires :Cybersecurity, :ProblemSolving .
+
+#################################################################
+#    Companies (Linked Open Data)
+#################################################################
+
+:Google a :Company ;
+    rdfs:label "Google"@en ;
+    :description "Multinational technology company specializing in Internet services" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q95> ;
+    :dbpediaURI <http://dbpedia.org/resource/Google> ;
+    :linkedTo <http://dbpedia.org/resource/Google> .
+
+:Microsoft a :Company ;
+    rdfs:label "Microsoft"@en ;
+    :description "Technology corporation known for Windows, Office, and Azure" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q2283> ;
+    :dbpediaURI <http://dbpedia.org/resource/Microsoft> ;
+    :linkedTo <http://dbpedia.org/resource/Microsoft> .
+
+:Amazon a :Company ;
+    rdfs:label "Amazon"@en ;
+    :description "E-commerce and cloud computing giant with AWS platform" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q3884> ;
+    :dbpediaURI <http://dbpedia.org/resource/Amazon_(company)> ;
+    :linkedTo <http://dbpedia.org/resource/Amazon_(company)> .
+
+:Meta a :Company ;
+    rdfs:label "Meta"@en ;
+    :description "Social technology company, formerly Facebook Inc." ;
+    :wikidataURI <http://www.wikidata.org/entity/Q380> ;
+    :dbpediaURI <http://dbpedia.org/resource/Meta_Platforms> ;
+    :linkedTo <http://dbpedia.org/resource/Meta_Platforms> .
+
+:SoftwareEngineerGoogle a :Job ;
+    :jobTitle "Software Engineer at Google" ;
+    :offeredBy :Google ;
+    :salary "150000"^^xsd:decimal ;
+    :requires :PythonProgramming, :WebDevelopment, :ProblemSolving .
+
+:MLEngineerMicrosoft a :Job ;
+    :jobTitle "Machine Learning Engineer at Microsoft" ;
+    :offeredBy :Microsoft ;
+    :salary "145000"^^xsd:decimal ;
+    :requires :MachineLearning, :DeepLearning, :CloudComputing .
+
+#################################################################
+#    Certifications (Linked Open Data)
+#################################################################
+
+:AWSArchitect a :Certification ;
+    rdfs:label "AWS Certified Solutions Architect"@en ;
+    :description "Professional-level AWS certification for cloud architects" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q456157> ;
+    :rating "4.7"^^xsd:decimal .
+
+:GoogleCloudProfessional a :Certification ;
+    rdfs:label "Google Cloud Professional Cloud Architect"@en ;
+    :description "Validates expertise in GCP architecture and solutions" ;
+    :rating "4.6"^^xsd:decimal .
+
+:CertifiedEthicalHacker a :Certification ;
+    rdfs:label "Certified Ethical Hacker (CEH)"@en ;
+    :description "EC-Council certification for security professionals" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q1056080> ;
+    :rating "4.5"^^xsd:decimal .
+
+:TensorFlowCertificate a :Certification ;
+    rdfs:label "TensorFlow Developer Certificate"@en ;
+    :description "Google certification for TensorFlow proficiency" ;
+    :rating "4.6"^^xsd:decimal .
+
+#################################################################
+#    Courses (Linked Open Data)
+#################################################################
+
+:CS50 a :Course ;
+    :courseName "CS50: Introduction to Computer Science" ;
+    rdfs:label "CS50"@en ;
+    :description "Harvard's introduction to computer science and programming" ;
+    :courseURL <https://cs50.harvard.edu/> ;
+    :duration 120 ;
+    :difficulty "Beginner" ;
+    :rating "4.9"^^xsd:decimal ;
+    :wikidataURI <http://www.wikidata.org/entity/Q5097505> ;
+    :dbpediaURI <http://dbpedia.org/resource/CS50> ;
+    :teaches :PythonProgramming, :WebDevelopment ;
+    :recommendedFor :SoftwareEngineer .
+
+:DeepLearningAI a :Course ;
+    :courseName "Deep Learning Specialization" ;
+    rdfs:label "Deep Learning Specialization"@en ;
+    :description "Andrew Ng's comprehensive deep learning course on Coursera" ;
+    :courseURL <https://www.coursera.org/specializations/deep-learning> ;
+    :duration 180 ;
+    :difficulty "Advanced" ;
+    :rating "4.9"^^xsd:decimal ;
+    :teaches :DeepLearning, :MachineLearning ;
+    :recommendedFor :DataScientist, :MLEngineer .
+
+:FullStackWebDev a :Course ;
+    :courseName "Full Stack Web Development Bootcamp" ;
+    rdfs:label "Full Stack Web Development"@en ;
+    :description "Complete web development course covering front-end and back-end" ;
+    :duration 300 ;
+    :difficulty "Intermediate" ;
+    :rating "4.7"^^xsd:decimal ;
+    :teaches :WebDevelopment ;
+    :recommendedFor :SoftwareEngineer .
+
+:AWSCloudPractitioner a :Course ;
+    :courseName "AWS Cloud Practitioner Essentials" ;
+    rdfs:label "AWS Cloud Practitioner"@en ;
+    :description "Foundational AWS cloud computing course" ;
+    :courseURL <https://aws.amazon.com/training/> ;
+    :duration 40 ;
+    :difficulty "Beginner" ;
+    :rating "4.6"^^xsd:decimal ;
+    :teaches :CloudComputing ;
+    :recommendedFor :CloudArchitect, :DevOpsEngineer .
+
+:KubernetesBasics a :Course ;
+    :courseName "Kubernetes for Beginners" ;
+    rdfs:label "Kubernetes Basics"@en ;
+    :description "Introduction to container orchestration with Kubernetes" ;
+    :duration 60 ;
+    :difficulty "Intermediate" ;
+    :rating "4.7"^^xsd:decimal ;
+    :teaches :DevOps ;
+    :recommendedFor :DevOpsEngineer .
+
+#################################################################
+#    Learning Paths
+#################################################################
+
+:MLCareerPath a :LearningPath ;
+    rdfs:label "Machine Learning Career Path"@en ;
+    :description "Structured path from beginner to ML engineer" .
+
+:CS50 :partOf :MLCareerPath .
+:DeepLearningAI :partOf :MLCareerPath .
+
+:WebDevPath a :LearningPath ;
+    rdfs:label "Full Stack Web Developer Path"@en ;
+    :description "Complete journey to becoming a full-stack developer" .
+
+:CS50 :partOf :WebDevPath .
+:FullStackWebDev :partOf :WebDevPath .
+
+:CloudEngineerPath a :LearningPath ;
+    rdfs:label "Cloud Engineer Career Path"@en ;
+    :description "Path to cloud architecture and DevOps expertise" .
+
+:AWSCloudPractitioner :partOf :CloudEngineerPath .
+:KubernetesBasics :partOf :CloudEngineerPath .

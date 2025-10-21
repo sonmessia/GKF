@@ -1,0 +1,201 @@
+@prefix : <http://gkf.org/ontology/it#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ===== SKILLS =====
+
+<http://gkf.org/data/Skill/python> a :TechnicalSkill ;
+    :skillName "Python Programming" ;
+    :skillLevel "Intermediate" ;
+    :description "Object-oriented programming language widely used in web development, data science, and automation" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q28865> .
+
+<http://gkf.org/data/Skill/javascript> a :TechnicalSkill ;
+    :skillName "JavaScript" ;
+    :skillLevel "Intermediate" ;
+    :description "Programming language for web development and client-side scripting" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q2005> .
+
+<http://gkf.org/data/Skill/react> a :TechnicalSkill ;
+    :skillName "React" ;
+    :skillLevel "Advanced" ;
+    :description "JavaScript library for building user interfaces" ;
+    :prerequisite <http://gkf.org/data/Skill/javascript> ;
+    :wikidataURI <http://www.wikidata.org/entity/Q19399674> .
+
+<http://gkf.org/data/Skill/sql> a :TechnicalSkill ;
+    :skillName "SQL" ;
+    :skillLevel "Beginner" ;
+    :description "Language for managing and querying relational databases" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q47146> .
+
+<http://gkf.org/data/Skill/machine-learning> a :TechnicalSkill ;
+    :skillName "Machine Learning" ;
+    :skillLevel "Advanced" ;
+    :description "Field of AI focused on building systems that learn from data" ;
+    :prerequisite <http://gkf.org/data/Skill/python> ;
+    :wikidataURI <http://www.wikidata.org/entity/Q2539> .
+
+<http://gkf.org/data/Skill/docker> a :TechnicalSkill ;
+    :skillName "Docker" ;
+    :skillLevel "Intermediate" ;
+    :description "Platform for developing, shipping, and running applications in containers" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q15206305> .
+
+<http://gkf.org/data/Skill/git> a :TechnicalSkill ;
+    :skillName "Git" ;
+    :skillLevel "Beginner" ;
+    :description "Distributed version control system" ;
+    :wikidataURI <http://www.wikidata.org/entity/Q186055> .
+
+<http://gkf.org/data/Skill/restful-api> a :TechnicalSkill ;
+    :skillName "RESTful API Design" ;
+    :skillLevel "Intermediate" ;
+    :description "Architectural style for designing networked applications" ;
+    :relatedTo <http://gkf.org/data/Skill/python> , <http://gkf.org/data/Skill/javascript> .
+
+<http://gkf.org/data/Skill/agile> a :SoftSkill ;
+    :skillName "Agile Methodology" ;
+    :skillLevel "Intermediate" ;
+    :description "Iterative approach to project management and software development" .
+
+<http://gkf.org/data/Skill/problem-solving> a :SoftSkill ;
+    :skillName "Problem Solving" ;
+    :skillLevel "Intermediate" ;
+    :description "Ability to analyze and solve complex technical problems" .
+
+# ===== COURSES =====
+
+<http://gkf.org/data/Course/python-basics> a :Course ;
+    :courseName "Python for Beginners" ;
+    :courseURL <https://example.com/python-basics> ;
+    :duration 40 ;
+    :difficulty "Beginner" ;
+    :rating 4.5 ;
+    :teaches <http://gkf.org/data/Skill/python> ;
+    :description "Learn Python programming from scratch" .
+
+<http://gkf.org/data/Course/advanced-python> a :Course ;
+    :courseName "Advanced Python Programming" ;
+    :courseURL <https://example.com/advanced-python> ;
+    :duration 60 ;
+    :difficulty "Advanced" ;
+    :rating 4.7 ;
+    :teaches <http://gkf.org/data/Skill/python> ;
+    :description "Master advanced Python concepts and patterns" .
+
+<http://gkf.org/data/Course/react-fundamentals> a :Course ;
+    :courseName "React Fundamentals" ;
+    :courseURL <https://example.com/react-fundamentals> ;
+    :duration 30 ;
+    :difficulty "Intermediate" ;
+    :rating 4.6 ;
+    :teaches <http://gkf.org/data/Skill/react> , <http://gkf.org/data/Skill/javascript> ;
+    :description "Build modern web applications with React" .
+
+<http://gkf.org/data/Course/sql-masterclass> a :Course ;
+    :courseName "SQL Masterclass" ;
+    :courseURL <https://example.com/sql-masterclass> ;
+    :duration 25 ;
+    :difficulty "Beginner" ;
+    :rating 4.4 ;
+    :teaches <http://gkf.org/data/Skill/sql> ;
+    :description "Learn SQL from basics to advanced queries" .
+
+<http://gkf.org/data/Course/ml-bootcamp> a :Course ;
+    :courseName "Machine Learning Bootcamp" ;
+    :courseURL <https://example.com/ml-bootcamp> ;
+    :duration 120 ;
+    :difficulty "Advanced" ;
+    :rating 4.8 ;
+    :teaches <http://gkf.org/data/Skill/machine-learning> , <http://gkf.org/data/Skill/python> ;
+    :description "Comprehensive ML course with hands-on projects" .
+
+<http://gkf.org/data/Course/docker-essentials> a :Course ;
+    :courseName "Docker Essentials" ;
+    :courseURL <https://example.com/docker-essentials> ;
+    :duration 20 ;
+    :difficulty "Intermediate" ;
+    :rating 4.5 ;
+    :teaches <http://gkf.org/data/Skill/docker> ;
+    :description "Learn containerization with Docker" .
+
+# ===== JOBS =====
+
+<http://gkf.org/data/Job/software-engineer> a :Job ;
+    :jobTitle "Software Engineer" ;
+    :salary 90000.00 ;
+    :description "Develop, test, and maintain software applications" ;
+    :requires <http://gkf.org/data/Skill/python> ,
+              <http://gkf.org/data/Skill/git> ,
+              <http://gkf.org/data/Skill/problem-solving> ,
+              <http://gkf.org/data/Skill/agile> .
+
+<http://gkf.org/data/Job/frontend-developer> a :Job ;
+    :jobTitle "Frontend Developer" ;
+    :salary 85000.00 ;
+    :description "Build user interfaces for web applications" ;
+    :requires <http://gkf.org/data/Skill/javascript> ,
+              <http://gkf.org/data/Skill/react> ,
+              <http://gkf.org/data/Skill/git> ,
+              <http://gkf.org/data/Skill/restful-api> .
+
+<http://gkf.org/data/Job/data-scientist> a :Job ;
+    :jobTitle "Data Scientist" ;
+    :salary 110000.00 ;
+    :description "Analyze data and build predictive models" ;
+    :requires <http://gkf.org/data/Skill/python> ,
+              <http://gkf.org/data/Skill/machine-learning> ,
+              <http://gkf.org/data/Skill/sql> ,
+              <http://gkf.org/data/Skill/problem-solving> .
+
+<http://gkf.org/data/Job/fullstack-developer> a :Job ;
+    :jobTitle "Full Stack Developer" ;
+    :salary 95000.00 ;
+    :description "Develop both frontend and backend of web applications" ;
+    :requires <http://gkf.org/data/Skill/python> ,
+              <http://gkf.org/data/Skill/javascript> ,
+              <http://gkf.org/data/Skill/react> ,
+              <http://gkf.org/data/Skill/sql> ,
+              <http://gkf.org/data/Skill/restful-api> ,
+              <http://gkf.org/data/Skill/docker> .
+
+<http://gkf.org/data/Job/devops-engineer> a :Job ;
+    :jobTitle "DevOps Engineer" ;
+    :salary 105000.00 ;
+    :description "Build and maintain CI/CD pipelines and infrastructure" ;
+    :requires <http://gkf.org/data/Skill/docker> ,
+              <http://gkf.org/data/Skill/git> ,
+              <http://gkf.org/data/Skill/python> ,
+              <http://gkf.org/data/Skill/problem-solving> .
+
+# ===== TECHNOLOGIES =====
+
+<http://gkf.org/data/Technology/react-tech> a :Technology ;
+    rdfs:label "React" ;
+    :description "JavaScript library for building user interfaces" .
+
+<http://gkf.org/data/Technology/docker-tech> a :Technology ;
+    rdfs:label "Docker" ;
+    :description "Container platform" .
+
+<http://gkf.org/data/Job/frontend-developer> :usesTechnology <http://gkf.org/data/Technology/react-tech> .
+<http://gkf.org/data/Job/fullstack-developer> :usesTechnology <http://gkf.org/data/Technology/react-tech> , <http://gkf.org/data/Technology/docker-tech> .
+<http://gkf.org/data/Job/devops-engineer> :usesTechnology <http://gkf.org/data/Technology/docker-tech> .
+
+# ===== LEARNING PATHS =====
+
+<http://gkf.org/data/LearningPath/web-dev> a :LearningPath ;
+    rdfs:label "Web Development Learning Path" ;
+    :description "Complete path from beginner to full stack developer" .
+
+<http://gkf.org/data/Course/python-basics> :partOf <http://gkf.org/data/LearningPath/web-dev> .
+<http://gkf.org/data/Course/react-fundamentals> :partOf <http://gkf.org/data/LearningPath/web-dev> .
+<http://gkf.org/data/Course/sql-masterclass> :partOf <http://gkf.org/data/LearningPath/web-dev> .
+
+# ===== COURSE RECOMMENDATIONS =====
+
+<http://gkf.org/data/Course/react-fundamentals> :recommendedFor <http://gkf.org/data/Job/frontend-developer> , <http://gkf.org/data/Job/fullstack-developer> .
+<http://gkf.org/data/Course/ml-bootcamp> :recommendedFor <http://gkf.org/data/Job/data-scientist> .
+<http://gkf.org/data/Course/docker-essentials> :recommendedFor <http://gkf.org/data/Job/devops-engineer> , <http://gkf.org/data/Job/fullstack-developer> .

@@ -1,0 +1,32 @@
+# Core Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+python-multipart==0.0.6
+
+# RDF & Semantic Web
+rdflib==7.0.0
+SPARQLWrapper==2.0.0
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.3
+
+# Web Scraping & APIs
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==5.1.0
+scrapy==2.11.0
+
+# NLP (for entity linking)
+spacy==3.7.2
+
+# Database
+psycopg2-binary==2.9.9
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.23.3
+
+# Development
+python-dotenv==1.0.0

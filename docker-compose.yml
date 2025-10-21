@@ -1,0 +1,66 @@
+services:
+  # GraphDB Triple Store
+  graphdb:
+    image: ontotext/graphdb:10.5.0
+    container_name: gkf-graphdb
+    ports:
+      - "7200:7200"
+    environment:
+      - GDB_JAVA_OPTS=-Xmx2g -Xms1g
+    volumes:
+      - graphdb-data:/opt/graphdb/home
+      - ./ontologies:/ontologies
+      - ./data:/data
+    networks:
+      - gkf-network
+
+  # Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: gkf-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - GRAPHDB_ENDPOINT=http://graphdb:7200/repositories/gkf
+      - PYTHONPATH=/app
+    volumes:
+      - ./backend:/app/backend
+      - ./ontologies:/app/ontologies
+      - ./data:/app/data
+    depends_on:
+      - graphdb
+    networks:
+      - gkf-network
+    command: >
+      sh -c "
+        sleep 10 &&
+        uvicorn backend.layer3_intelligence.api.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+  # Frontend Application
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: gkf-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - gkf-network
+
+volumes:
+  graphdb-data:
+    driver: local
+
+networks:
+  gkf-network:
+    driver: bridge
