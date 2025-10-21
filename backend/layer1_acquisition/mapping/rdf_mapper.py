@@ -42,7 +42,9 @@ class MappingEngine:
             }
         }
         """
-        entity_type = mapping_rules.get("entity_type", {})
+        entity_type = mapping_rules.get("entity_type", None)
+        if not entity_type or not isinstance(entity_type, str):
+            raise ValueError("Mapping rules must specify a valid 'entity_type' as a non-empty string.")
         id_field = mapping_rules.get("id_field", "id")
         field_mappings = mapping_rules.get("mappings", {})
 
